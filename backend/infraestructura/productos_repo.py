@@ -26,11 +26,11 @@ class ProductosRepo():
     def modificar(self, id, data):
         p = Producto.query.get(id)
         if p:
-            p.codigo = data['codigo']
-            p.nombre = data['nombre']
+            p.codigo = data['id']
+            p.tipo = data['tipo']
             p.descripcion = data.get('descripcion', None)
-            p.precio_unitario = data['precio_unitario']
-            p.stock = data['stock']
+            p.costo = data['costo']
+            p.porcentaje_ganancia = data['porcentaje_ganancia']
             db.session.commit()
             return True
         return False

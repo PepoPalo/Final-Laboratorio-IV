@@ -7,10 +7,10 @@ repo = ProductosRepo()
 nsProducto = Namespace('productos', description='Administrador de productos')
 
 modeloProductoSinID = Model('ProductoSinIDyPrecio',{
-    'nombre': fields.String(),
+    'tipo': fields.String(),
     'descripcion': fields.String(),
-    'stock': fields.Integer(),
-    'precio_unitario': fields.Float()
+    'porcentaje_ganancia': fields.Integer(),
+    'costo': fields.Float()
 })
 
 modeloProducto = modeloProductoSinID.clone('Producto',{
@@ -22,10 +22,10 @@ nsProducto.models[modeloProducto.name] = modeloProducto
 nsProducto.models[modeloProductoSinID.name] = modeloProductoSinID
 
 nuevoProductoParser = reqparse.RequestParser(bundle_errors=True)
-nuevoProductoParser.add_argument('nombre', type=str, required=True)
+nuevoProductoParser.add_argument('tipo', type=str, required=True)
 nuevoProductoParser.add_argument('descripcion', type=str)
-nuevoProductoParser.add_argument('precio_unitario', type=float)
-nuevoProductoParser.add_argument('stock', type=int, required=True)
+nuevoProductoParser.add_argument('costo', type=float)
+nuevoProductoParser.add_argument('porcentaje_ganancia', type=int, required=True)
 
 editarProductoParser = nuevoProductoParser.copy()
 editarProductoParser.add_argument('codigo',type=int, required=True)

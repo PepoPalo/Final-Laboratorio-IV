@@ -1,39 +1,41 @@
 from flask import abort
 from flask_restx import Resource, Namespace, Model, fields, reqparse
-from infraestructura.dfacturas_repo import DFacturasRepo
+from infraestructura.detalle_repo import DetalleRepo
 
-repo = DFacturasRepo()
+repo = DetalleRepo()
 
-nsDFactura = Namespace('dfactura', description= 'Administrador de detalle')
-modeloDetalleFacturaSinNum = Model('DFacturaSinNumero',{
-    'factura_numero': fields.Integer(),
+nsDetalle = Namespace('detalle', description= 'Administrador de detalle')
+modeloDetalleSinNum = Model('DetalleSinNumero',{
+    'adicion_numero': fields.Integer(),
     'producto_codigo': fields.Integer(),
+    'porcentaje_venta': fields.Float(),
     'cantidad': fields.Integer()
 })
 
-modeloDetalleFactura = modeloDetalleFacturaSinNum.clone('DFactura', {
+modeloDetalle = modeloDetalleSinNum.clone('Detalle', {
     'id': fields.Integer()
 })
 
-nsDFactura.models[modeloDetalleFacturaSinNum.name] = modeloDetalleFacturaSinNum
-nsDFactura.models[modeloDetalleFactura.name] = modeloDetalleFactura
+nsDetalle.models[modeloDetalleSinNum.name] = modeloDetalleSinNum
+nsDetalle.models[modeloDetalle.name] = modeloDetalle
 
 nuevoDetalleParser = reqparse.RequestParser(bundle_errors=True)
-nuevoDetalleParser.add_argument('factura_numero', type=int, required=True)
+nuevoDetalleParser.add_argument('adicion_numero', type=int, required=True)
 nuevoDetalleParser.add_argument('producto_codigo', type=int, required=True)
+nuevoDetalleParser.add_argument('porcentaje_venta', type=float, required=True)
 nuevoDetalleParser.add_argument('cantidad', type=int, required=True)
 
 editarDetalleParser = nuevoDetalleParser.copy()
 editarDetalleParser.add_argument('id', type=int, required=True)
 
-@nsDFactura.route('/')
-class DFacturaResource(Resource):
-    @nsDFactura.marshal_list_with(modeloDetalleFactura)
+@nsDetalle.route('/')
+class DetalleResource(Resource):
+    @nsDetalle.marshal_list_with(modeloDetalle)
     def get(self):
         return repo.get_all()
 
-    @nsDFactura.expect(modeloDetalleFacturaSinNum)
-    @nsDFactura.marshal_with(modeloDetalleFactura)
+    @nsDetalle.expect(modeloDetalleSinNum)
+    @nsDetalle.marshal_with(modeloDetalle)
     def post(self):
         data = nuevoDetalleParser.parse_args()
         df = repo.agregar(data)
@@ -41,9 +43,9 @@ class DFacturaResource(Resource):
             return df, 201
         abort(500)
 
-@nsDFactura.route('/<int:id>')
-class DFacturaResource(Resource):
-    @nsDFactura.marshal_with(modeloDetalleFactura)
+@nsDetalle.route('/<int:id>')
+class DetalleResource(Resource):
+    @nsDetalle.marshal_with(modeloDetalle)
     def get(self, id):
         df = repo.get_by_id(id)
         if df:
@@ -52,12 +54,12 @@ class DFacturaResource(Resource):
 
     def delete(self, id):
         if repo.borrar(id):
-            return 'Factura borrada', 200
+            return 'Detalle borrado', 200
         abort(400)
 
-    @nsDFactura.expect(modeloDetalleFactura)
+    @nsDetalle.expect(modeloDetalle)
     def put(self, id):
         data = editarDetalleParser.parse_args()
         if repo.modificar(id,data):
-            return 'Detalle Factura modificada', 200
+            return 'Detalle modificada', 200
         abort(404)

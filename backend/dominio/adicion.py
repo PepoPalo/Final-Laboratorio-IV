@@ -3,14 +3,11 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datos import db
 from dominio.cliente import Cliente
 
-class Factura(db.Model):
-    __tablename__ = 'facturas'
+class Adicion(db.Model):
+    __tablename__ = 'adiciones'
     numero = Column(Integer(), primary_key=True, autoincrement=True)
-    tipo = Column(String(80), nullable=False)
-    punto_venta = Column(Integer(), nullable=False)
+    mesa = Column(Integer()), nullable=False)
+    nro_mozo = Column(Integer(), ForeignKey('mozos.numero'), nullable=False)
     fecha = Column(String(20), nullable=False)
-    cliente_id = Column(Integer(), ForeignKey('clientes.id'), nullable=False)
-    cliente = relationship('Cliente')
-    
-    
+    detalle = relationship("Detalle")
     

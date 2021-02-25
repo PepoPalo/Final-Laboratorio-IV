@@ -4,10 +4,10 @@ from flask_cors import CORS
 
 from datos import db
 
-from api.clientes_api import nsCliente
+from api.mozos_api import nsMozo
 from api.productos_api import nsProducto
-from api.facturas_api import nsFactura
-from api.dfacturas_api import nsDFactura
+from api.adiciones_api import nsAdicion
+from api.detalles_api import nsDetalle
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Yegua2020@localhost/lab4"
@@ -18,12 +18,12 @@ with app.app_context():
     db.create_all()
 
 
-api = Api(app, version='1.0.beta', title='Factura ACME', description='Administracion de facturas')
+api = Api(app, version='1.0.beta', title='TuMenú', description='Administracion de restaurante')
 
-api.add_namespace(nsCliente)
+api.add_namespace(nsMozo)
 api.add_namespace(nsProducto)
-api.add_namespace(nsFactura) 
-api.add_namespace(nsDFactura)
+api.add_namespace(nsAdicion) 
+api.add_namespace(nsDetalle)
 
 if __name__ == '__main__':
     app.run()
