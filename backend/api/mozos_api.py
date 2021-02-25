@@ -1,6 +1,6 @@
 from flask import abort
 from flask_restx import Resource, Namespace, Model, fields, reqparse
-from infraestructura.Mozos_repo import MozosRepo
+from infraestructura.mozos_repo import MozosRepo
 
 repo = MozosRepo()
 

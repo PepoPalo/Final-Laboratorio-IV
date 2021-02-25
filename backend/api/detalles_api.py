@@ -1,8 +1,8 @@
 from flask import abort
 from flask_restx import Resource, Namespace, Model, fields, reqparse
-from infraestructura.detalle_repo import DetalleRepo
+from infraestructura.detalle_repo import DetallesRepo
 
-repo = DetalleRepo()
+repo = DetallesRepo()
 
 nsDetalle = Namespace('detalle', description= 'Administrador de detalle')
 modeloDetalleSinNum = Model('DetalleSinNumero',{

@@ -1,7 +1,7 @@
 from dominio.detalle import Detalle
 from datos import db
 
-class DetalleRepo():
+class DetallesRepo():
     def get_all(self):
         return Detalle.query.all()
 

@@ -6,4 +6,4 @@ class Mozo(db.Model):
     __tablename__: 'mozos'
     numero = Column(Integer(), primary_key=True, autoincrement=True)
     nombre = Column(String(80), nullable=False)
-    adicion = relationship("Adicion")
+    adiciones = db.relationship('Adicion')

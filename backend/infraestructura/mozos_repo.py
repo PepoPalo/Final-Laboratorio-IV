@@ -1,7 +1,7 @@
 from dominio.mozo import Mozo
 from datos import db
 
-class ClientesRepo():
+class MozosRepo():
     def get_all(self):
         return Mozo.query.all()
 

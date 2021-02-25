@@ -1,7 +1,7 @@
 from dominio.adicion import Adicion
 from datos import db
 
-class FacturasRepo():
+class AdicionesRepo():
     def get_all(self):
         return Adicion.query.all()
 
@@ -25,7 +25,7 @@ class FacturasRepo():
     def modificar(self,id,data):
         a = Adicion.query.get(id)
         if a:
-            a.numero = data['numero']
+            a.id = data['id']
             a.mesa = data['mesa']
             a.nro_mozo = data['nro_mozo']
             a.fecha = data['fecha']

@@ -12,7 +12,7 @@ modeloAdicionSinN = Model('AdicionSinNumero',{
 })
 
 modeloAdicion = modeloAdicionSinN.clone('Adicion', {
-    'numero': fields.Integer()
+    'id': fields.Integer()
 })
 
 nsAdicion.models[modeloAdicion.name] = modeloAdicion
@@ -24,7 +24,7 @@ nuevaAdicionParser.add_argument('fecha', type=str, required=True)
 nuevaAdicionParser.add_argument('nro_mozo', type=int, required=True)
 
 editarAdicionParser = nuevaAdicionParser.copy()
-editarAdicionParser.add_argument('numero', type=int, required=True)
+editarAdicionParser.add_argument('id', type=int, required=True)
 
 @nsAdicion.route('/')
 class AdicionesResource(Resource):
