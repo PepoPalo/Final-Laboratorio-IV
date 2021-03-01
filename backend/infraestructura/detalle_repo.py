@@ -1,4 +1,5 @@
 from dominio.detalle import Detalle
+from dominio.producto import Producto
 from datos import db
 
 class DetallesRepo():
@@ -29,7 +30,6 @@ class DetallesRepo():
             detalle.adicion_numero = data['adicion_numero']
             detalle.producto_codigo = data['producto_codigo']
             detalle.cantidad = data['cantidad']
-            detalle.porcentaje_venta = data['porcentaje_venta']
             db.session.commit()
             return True
         return False

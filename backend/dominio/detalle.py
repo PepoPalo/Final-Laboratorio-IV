@@ -7,5 +7,4 @@ class Detalle(db.Model):
     id = Column(Integer(), primary_key=True, autoincrement=True)
     adicion_numero = Column(Integer(), ForeignKey('adiciones.numero'), nullable=False)
     producto_codigo = Column(Integer(), ForeignKey('productos.codigo'), nullable=False)
-    porcentaje_venta = Column(Numeric)
-    cantidad = Column(Integer(), nullable=False)
+    cantidad = Column(Integer())

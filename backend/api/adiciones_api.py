@@ -15,8 +15,19 @@ modeloAdicion = modeloAdicionSinN.clone('Adicion', {
     'id': fields.Integer()
 })
 
+modeloBusqueda = Model('BusquedaFechas', {
+    'desde': fields.String(),
+    'hasta': fields.String()
+})
+
+modeloBusquedaConMozo = modeloBusqueda.clone('BusquedaFechasMozo', {
+    'nro_mozo': fields.Integer()
+})
+
 nsAdicion.models[modeloAdicion.name] = modeloAdicion
 nsAdicion.models[modeloAdicionSinN.name] = modeloAdicionSinN
+nsAdicion.models[modeloBusqueda.name] = modeloBusqueda
+nsAdicion.models[modeloBusquedaConMozo.name] = modeloBusquedaConMozo
 
 nuevaAdicionParser = reqparse.RequestParser(bundle_errors=True)
 nuevaAdicionParser.add_argument('mesa', type=int, required=True)
@@ -25,6 +36,13 @@ nuevaAdicionParser.add_argument('nro_mozo', type=int, required=True)
 
 editarAdicionParser = nuevaAdicionParser.copy()
 editarAdicionParser.add_argument('id', type=int, required=True)
+
+buscarAdicionesParser = reqparse.RequestParser(bundle_errors=True)
+buscarAdicionesParser.add_argument('desde', type=str, required=True)
+buscarAdicionesParser.add_argument('hasta', type=str, required=True)
+
+buscarAdicionesConMozoParser = buscarAdicionesParser.copy()
+buscarAdicionesConMozoParser.add_argument('nro_mozo', type=int, required=True)
 
 @nsAdicion.route('/')
 class AdicionesResource(Resource):
@@ -61,3 +79,16 @@ class AdicionesResource(Resource):
         if repo.modificar(id, data):
             return 'Adicion modificada', 200
         abort(404)
+
+@nsAdicion.route('/buscar')
+class AdicionesResource(Resource):
+    # """
+    # Busca adiciones con las fechas, el formato es: YYYY-MM-DD
+    # """
+    @nsAdicion.expect(modeloBusqueda)
+    @nsAdicion.marshal_list_with(modeloAdicion)
+    def get(self):
+        data = buscarAdicionesParser.parse_args()
+        if repo.buscar(data):
+            return 'Lista de adiciones por fechas', 200
+        abort()

@@ -1,3 +1,4 @@
+import datetime
 from dominio.adicion import Adicion
 from datos import db
 
@@ -29,6 +30,14 @@ class AdicionesRepo():
             a.mesa = data['mesa']
             a.nro_mozo = data['nro_mozo']
             a.fecha = data['fecha']
+            a.cerrada = data['cerrada']
             db.session.commit()
             return True
         return False
+
+    def buscar(self, data):
+        desde = datetime.datetime.strptime(data['desde'], '%Y-%m-%d')
+        hasta = datetime.datetime.strptime(data['hasta'], '%Y-%m-%d')
+        return Adicion.query.filter(
+            datetime.datetime.strptime(Adicion.fecha, '%Y-%m-%d') >= desde,
+            datetime.datetime.strptime(Adicion.fecha, '%Y-%m-%d') <= hasta)

@@ -6,7 +6,7 @@ repo = ProductosRepo()
 
 nsProducto = Namespace('productos', description='Administrador de productos')
 
-modeloProductoSinID = Model('ProductoSinIDyPrecio',{
+modeloProductoSinID = Model('ProductoSinCod',{
     'tipo': fields.String(),
     'descripcion': fields.String(),
     'porcentaje_ganancia': fields.Integer(),

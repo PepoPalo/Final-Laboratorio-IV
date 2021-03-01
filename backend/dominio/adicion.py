@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from datos import db
 
 class Adicion(db.Model):
@@ -8,4 +8,5 @@ class Adicion(db.Model):
     mesa = Column(Integer(), nullable=False)
     nro_mozo = Column(Integer(), ForeignKey('mozo.numero'), nullable=False)
     fecha = Column(String(20), nullable=False)
+    cerrada = Column(Boolean(False))
     detalles = relationship('Detalle')
