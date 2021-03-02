@@ -12,21 +12,21 @@ class AdicionesRepo():
         db.session.commit()
         return a
     
-    def get_by_id(self, id):
-        return Adicion.query.get(id)
+    def get_by_numero(self, numero):
+        return Adicion.query.get(numero)
 
-    def borrar(self, id):
-        a = Adicion.query.get(id)
+    def borrar(self, numero):
+        a = Adicion.query.get(numero)
         if a:
             db.session.delete(a)
             db.session.commit()
             return True
         return False
 
-    def modificar(self,id,data):
-        a = Adicion.query.get(id)
+    def modificar(self,numero,data):
+        a = Adicion.query.get(numero)
         if a:
-            a.id = data['id']
+            a.numero = data['numero']
             a.mesa = data['mesa']
             a.nro_mozo = data['nro_mozo']
             a.fecha = data['fecha']
@@ -36,8 +36,6 @@ class AdicionesRepo():
         return False
 
     def buscar(self, data):
-        desde = datetime.datetime.strptime(data['desde'], '%Y-%m-%d')
-        hasta = datetime.datetime.strptime(data['hasta'], '%Y-%m-%d')
         return Adicion.query.filter(
-            datetime.datetime.strptime(Adicion.fecha, '%Y-%m-%d') >= desde,
-            datetime.datetime.strptime(Adicion.fecha, '%Y-%m-%d') <= hasta)
+            Adicion.fecha >= data['desde'],
+            Adicion.fecha <= data['hasta']).all()

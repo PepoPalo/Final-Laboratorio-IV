@@ -7,17 +7,17 @@ repo = AdicionesRepo()
 nsAdicion = Namespace('adiciones', description='Administrador de adiciones')
 modeloAdicionSinN = Model('AdicionSinNumero',{
     'mesa': fields.Integer(),
-    'fecha': fields.String(),
+    'fecha': fields.Date(),
     'nro_mozo': fields.Integer()
 })
 
 modeloAdicion = modeloAdicionSinN.clone('Adicion', {
-    'id': fields.Integer()
+    'numero': fields.Integer()
 })
 
 modeloBusqueda = Model('BusquedaFechas', {
-    'desde': fields.String(),
-    'hasta': fields.String()
+    'desde': fields.Date(),
+    'hasta': fields.Date()
 })
 
 modeloBusquedaConMozo = modeloBusqueda.clone('BusquedaFechasMozo', {
@@ -35,7 +35,7 @@ nuevaAdicionParser.add_argument('fecha', type=str, required=True)
 nuevaAdicionParser.add_argument('nro_mozo', type=int, required=True)
 
 editarAdicionParser = nuevaAdicionParser.copy()
-editarAdicionParser.add_argument('id', type=int, required=True)
+editarAdicionParser.add_argument('numero', type=int, required=True)
 
 buscarAdicionesParser = reqparse.RequestParser(bundle_errors=True)
 buscarAdicionesParser.add_argument('desde', type=str, required=True)
@@ -59,24 +59,24 @@ class AdicionesResource(Resource):
             return f, 201
         abort(500)
 
-@nsAdicion.route('/<int:id>')
+@nsAdicion.route('/<int:numero>')
 class AdicionesResource(Resource):
     @nsAdicion.marshal_with(modeloAdicion)
-    def get(self, id):
-        f = repo.get_by_id(id)
+    def get(self, numero):
+        f = repo.get_by_numero(numero)
         if f:
             return f, 200
         abort(404)
 
-    def delete(self, id):
-        if repo.borrar(id):
+    def delete(self, numero):
+        if repo.borrar(numero):
             return 'Adicion borrada', 200
         abort(400)
     
     @nsAdicion.expect(modeloAdicion)
-    def put(self, id):
+    def put(self, numero):
         data = editarAdicionParser.parse_args()
-        if repo.modificar(id, data):
+        if repo.modificar(numero, data):
             return 'Adicion modificada', 200
         abort(404)
 
@@ -87,8 +87,9 @@ class AdicionesResource(Resource):
     # """
     @nsAdicion.expect(modeloBusqueda)
     @nsAdicion.marshal_list_with(modeloAdicion)
-    def get(self):
+    def put(self):
         data = buscarAdicionesParser.parse_args()
-        if repo.buscar(data):
-            return 'Lista de adiciones por fechas', 200
+        l = repo.buscar(data)
+        if l:
+            return l, 200
         abort()
