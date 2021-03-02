@@ -20,14 +20,9 @@ modeloBusqueda = Model('BusquedaFechas', {
     'hasta': fields.Date()
 })
 
-modeloBusquedaConMozo = modeloBusqueda.clone('BusquedaFechasMozo', {
-    'nro_mozo': fields.Integer()
-})
-
 nsAdicion.models[modeloAdicion.name] = modeloAdicion
 nsAdicion.models[modeloAdicionSinN.name] = modeloAdicionSinN
 nsAdicion.models[modeloBusqueda.name] = modeloBusqueda
-nsAdicion.models[modeloBusquedaConMozo.name] = modeloBusquedaConMozo
 
 nuevaAdicionParser = reqparse.RequestParser(bundle_errors=True)
 nuevaAdicionParser.add_argument('mesa', type=int, required=True)
@@ -41,8 +36,6 @@ buscarAdicionesParser = reqparse.RequestParser(bundle_errors=True)
 buscarAdicionesParser.add_argument('desde', type=str, required=True)
 buscarAdicionesParser.add_argument('hasta', type=str, required=True)
 
-buscarAdicionesConMozoParser = buscarAdicionesParser.copy()
-buscarAdicionesConMozoParser.add_argument('nro_mozo', type=int, required=True)
 
 @nsAdicion.route('/')
 class AdicionesResource(Resource):
@@ -90,6 +83,20 @@ class AdicionesResource(Resource):
     def put(self):
         data = buscarAdicionesParser.parse_args()
         l = repo.buscar(data)
+        if l:
+            return l, 200
+        abort()
+
+@nsAdicion.route('/buscar/<int:mozo>')
+class AdicionesResource(Resource):
+    # """
+    # Busca adiciones con las fechas, el formato es: YYYY-MM-DD
+    # """
+    @nsAdicion.expect(modeloBusqueda)
+    @nsAdicion.marshal_list_with(modeloAdicion)
+    def put(self, mozo):
+        data = buscarAdicionesParser.parse_args()
+        l = repo.buscar_by_mozo(data, mozo)
         if l:
             return l, 200
         abort()

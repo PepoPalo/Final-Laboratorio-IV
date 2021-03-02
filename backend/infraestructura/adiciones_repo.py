@@ -39,3 +39,9 @@ class AdicionesRepo():
         return Adicion.query.filter(
             Adicion.fecha >= data['desde'],
             Adicion.fecha <= data['hasta']).all()
+
+    def buscar_by_mozo(self, data, mozo):
+        return Adicion.query.filter(
+            Adicion.fecha >= data['desde'],
+            Adicion.fecha <= data['hasta'],
+            Adicion.nro_mozo == mozo).all()
