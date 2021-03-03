@@ -32,9 +32,9 @@ export function AdicionForm() {
     useEffect(() => {
         
 
-        // axios.get("http://localhost:5000/productos/")
-        //     .then((response) => setListaP(response.data.filter(producto => producto.codigo != null)))
-        //     .catch((error) => alert(error))
+        axios.get("http://localhost:5000/productos/")
+            .then((response) => setListaP(response.data.filter(producto => producto.codigo != null)))
+            .catch((error) => alert(error))
 
         axios.get("http://localhost:5000/mozos/")
             .then((response) => setListaC(response.data.filter(mozo => mozo.numero != null)))
@@ -172,11 +172,11 @@ export function AdicionForm() {
                <table className="table">
                     <thead>
                         <tr>
-                            <th>Codigo</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Precio u</th>
-                            <th>Stock</th>
+                        <th>Codigo</th>
+            <th>Tipo</th>
+            <th>Descripcion</th>
+            <th>Costo</th>
+            <th>Porcentaje de ganancia</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -185,10 +185,10 @@ export function AdicionForm() {
                             listap.map(item => (
                                 <tr key={item.codigo}>
                                     <td>{item.codigo}</td>
-                                    <td>{item.nombre}</td>
+                                    <td>{item.tipo}</td>
                                     <td>{item.descripcion}</td>
-                                    <td>{item.precio_unitario}</td>
-                                    <td>{item.stock}</td>
+                                    <td>{item.costo}</td>
+                                    <td>{item.porcentaje_ganancia}</td>
                                 </tr>))
                         )}
                         {listap.length === 0 && (
