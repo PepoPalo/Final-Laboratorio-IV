@@ -30,12 +30,18 @@ export function DetalleListado() {
       axios.get("http://localhost:5000/detalle/")
       .then((response) => setListap(response.data.filter(d => d.adicion_numero != null && d.adicion_numero == id)))
       .catch((error) => alert(error))
-      axios.get(`http://localhost:5000/adiciones/${listap[0].adicion_numero}`)
-      .then(response => setAdicion(response.data))
-      .catch((error) => alert(error))
+      // axios.get(`http://localhost:5000/adiciones/${id}`)
+      // .then(response => setAdicion(response.data))
+      // .catch((error) => alert(error))
       })
     .catch((error) => alert(error))
+    if(id){
+      axios.get(`http://localhost:5000/adiciones/${id}`)
+      .then(response => setAdicion(response.data))
+      .catch((error) => alert(error))
+      console.log(id)
     }
+  }
 
   function subTotal (cantidad, costo, porcentaje_ganancia) {
     let xtotal;
@@ -86,7 +92,7 @@ export function DetalleListado() {
                     }
                 </td>
                 <td>
-                  {!activador && <button type="button" className="btn btn-danger" onClick={() => borrar(item.id)}>-</button>}
+                  {!adicion.cerrada && <button type="button" className="btn btn-danger" onClick={() => borrar(item.id)}>-</button>}
                 </td>
               </tr>))
           )}

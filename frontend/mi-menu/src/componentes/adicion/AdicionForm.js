@@ -157,10 +157,6 @@ function traeMozo(number){
                         </select>
                     </div>
                 </div>
-               
-                
-               
-
 
                 <div className="float-right">
                     <button type="submit" className="btn btn-success mr-2">Aceptar</button>
@@ -168,7 +164,7 @@ function traeMozo(number){
                 </div>
             </form>
 
-         {numero && <DetalleListado/>}
+         {numero && <DetalleListado id={numero} />}
          </>
     );
 }
