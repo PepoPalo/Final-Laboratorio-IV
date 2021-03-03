@@ -10,7 +10,7 @@ from api.adiciones_api import nsAdicion
 from api.detalles_api import nsDetalle
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Yegua2020@localhost/TuMenu"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:100letters@localhost/TuMenu"
 CORS(app)
 db.init_app(app)
 

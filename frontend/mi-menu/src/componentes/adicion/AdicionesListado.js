@@ -15,7 +15,7 @@ export function AdicionesListado() {
       .catch((error) => alert(error))
   }
   function getAdicion(nro) {
-    axios.delete(`http://localhost:5000/adiciones/${nro}`)
+    axios.get(`http://localhost:5000/adiciones/${nro}`)
       .then((response) => {
         alert("Registro borrado correctamente")
         getAdiciones()
@@ -53,7 +53,7 @@ export function AdicionesListado() {
                 <td>{item.mesa}</td>
                 <td>{item.nro_mozo}</td>
                 <td>{item.fecha}</td>
-                <td>{item.cerrada}</td>
+                {/* <td>{item.cerrada}</td> */}
                 <td>
                 <Link className="btn btn-primary" to={"/adiciones/" + item.numero}>Ver</Link> &nbsp;
 
@@ -72,7 +72,7 @@ export function AdicionesListado() {
           )}
         </tbody>
       </table>
-      <Link className="btn btn-success" to="/adicion/nueva">Crear</Link>
+      <Link className="btn btn-success" to="/adiciones/nueva/">Crear</Link>
     </div>
   )
 }

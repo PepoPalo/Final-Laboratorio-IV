@@ -5,6 +5,11 @@ import axios from 'axios';
 export function AdicionForm() {
 
     const { numero } = useParams()
+    const [mozo, setMozo] = useState({
+        numero: '',
+        nombre: ''
+    })
+
     const history = useHistory()
 
     const [listac, setListaC] = useState([])
@@ -16,7 +21,8 @@ export function AdicionForm() {
         mesa: '',
         nro_mozo: '',
         fecha: '',
-        cerrada: ''
+        cerrada: '',
+        porcentaje_venta:''
     })
     const [dadicion, setDadicion] = useState({
         id: '',
@@ -37,26 +43,45 @@ export function AdicionForm() {
             .catch((error) => alert(error))
 
         axios.get("http://localhost:5000/mozos/")
-            .then((response) => setListaC(response.data.filter(mozo => mozo.numero != null)))
+            .then((response) => setListaC(response.data.filter(m => m.numero != null)))
             .catch((error) => alert(error))
 
         if (numero) {
             axios.get(`http://localhost:5000/adiciones/${numero}`)
                 .then(response => setadicion(response.data))
+                .then( traeMozo())
                 .catch(error => alert(error))
             
             axios.get("http://localhost:5000/detalle/")
                 .then((response) => setListaDF(response.data.filter(df => df.adicion_numero != null && df.adicion_numero == numero)))
                 .catch((error) => alert(error))
+
+
+
+                // axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
+                // .then(response => setMozo(response.data))
+                // .catch(error => alert(error))
+                 
         }
     }, [])
-
+function traeMozo(){
+    axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
+                .then(response => setMozo(response.data))
+                .catch(error => alert(error))
+    return m;
+}
     function handleOnChangeDF(event, campo) {
         setDadicion({
             ...dadicion,
             [campo]: event.target.value
         })
 
+    }
+    function handleOnChanges(event, campo) {
+        setMozo({
+            ...mozo,
+            [campo]: event.target.value
+        })
     }
 
     function handleOnChange(event, campo) {
@@ -117,9 +142,9 @@ export function AdicionForm() {
                     <label>Fecha</label>
                     <input type="text" className="form-control" value={adicion.fecha} onChange={(event) => handleOnChange(event, 'fecha')} />
                 </div>
-
-                <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange={(event) => handleOnChange(event, 'numero')}>
-                        <option selected>Seleccione mozo</option>
+                <label>Mozo</label>
+                <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => handleOnChanges(event, 'nro_mozo')}>
+                        <option selected value={mozo.numero}> {mozo.nombre}</option>
                             {listac.length > 0 && (
                                 listac.map(item => (
                                 <option key={item.numero} value={item.numero}>{item.nombre}</option>
@@ -127,13 +152,18 @@ export function AdicionForm() {
                             )}
                     </select>
 
+                    <div className="form-group">
+                    <label>Porcentaje venta</label>
+                    <input type="number" className="form-control" value={adicion.porcentaje_venta} onChange={(event) => handleOnChange(event, 'porcentaje_venta')} />
+                </div>
+
                 <div className="float-right">
                     <button type="submit" className="btn btn-success mr-2">Aceptar</button>
                     <button onClick={() => history.push("/adiciones")} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
 
-         {numero &&<>
+         {/* {numero &&<>
                 <form onSubmit={(event) => guardarDadicion(event)}>
 
                     <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange={(event) => handleOnChangeDF(event, 'producto_codigo')}>
@@ -200,7 +230,7 @@ export function AdicionForm() {
                         )}
                     </tbody>
                 </table> 
-                 </>}
+                 </>} */}
          </>
     );
 }

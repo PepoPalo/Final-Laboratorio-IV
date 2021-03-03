@@ -46,16 +46,11 @@ export default function App() {
           <Route path="/productos/nuevo" component={ProductoForm}></Route>
           <Route path="/productos/:id" component={ProductoForm} ></Route>
           <Route path="/productos" component={ProductoListado}></Route>
+          <Route path="/adiciones/nueva" component={AdicionForm}></Route>
+          <Route path="/adiciones/:numero" component={AdicionForm}></Route>
 
-          {/* <Route path="/factura/:id:activador" component={FacturaDetalle}></Route>
+           <Route path="/adiciones" component={AdicionesListado}></Route>
 
-          <Route path="/facturas/nueva" component={FacturaForm}></Route>
-          <Route path="/facturas/:id" component={FacturaForm}></Route>
-          <Route path="/facturas" component={FacturaListado}></Route>
-  */} 
-   <Route path="/adiciones/:id" component={AdicionForm}></Route>
-   <Route path="/adiciones/nueva" component={AdicionForm}></Route>
-   <Route path="/adiciones" component={AdicionesListado}></Route>
 
           <Route path="/producto/:id" component={DetalleForm}></Route>
 
