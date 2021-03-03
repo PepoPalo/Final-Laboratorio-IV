@@ -38,12 +38,12 @@ export function DetalleForm() {
         event.stopPropagation()
             axios.post("http://localhost:5000/detalle/", producto)
                 .then(response => {
-                    history.push(`/facturas/${id}`)
+                    history.push(`/adiciones/${id}`)
                 }).catch(error => alert(error))
     }
     return (
         <>
-            <h1>Nuevo producto de factura</h1>
+            <h1>Nuevo producto de adicion</h1>
             <form onSubmit={(event) => guardar(event)}>
                 
                 <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange={(event) => handleOnChange(event, 'producto_codigo')}>

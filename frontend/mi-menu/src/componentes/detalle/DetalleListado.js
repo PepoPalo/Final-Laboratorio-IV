@@ -30,9 +30,6 @@ export function DetalleListado() {
       axios.get("http://localhost:5000/detalle/")
       .then((response) => setListap(response.data.filter(d => d.adicion_numero != null && d.adicion_numero == id)))
       .catch((error) => alert(error))
-      // axios.get(`http://localhost:5000/adiciones/${id}`)
-      // .then(response => setAdicion(response.data))
-      // .catch((error) => alert(error))
       })
     .catch((error) => alert(error))
     if(id){
