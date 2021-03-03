@@ -31,7 +31,7 @@ export function MozoListado() {
   return (
     <div>
       <h1>Mozos</h1>
-      <table className="table">
+      <table className="table text-center">
         <thead>
           <tr>
             <th>Numero</th>
@@ -42,7 +42,7 @@ export function MozoListado() {
         <tbody>
           {lista.length > 0 && (
             lista.map(item => (
-              <tr key={item.numero}>
+              <tr key={item.numero} className="text-center">
                 <td>{item.numero}</td>
                 <td>{item.nombre}</td>
                 <td>

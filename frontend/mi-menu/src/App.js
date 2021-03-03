@@ -13,7 +13,7 @@ import { MozoForm } from "./componentes/mozo/MozoForm.js";
 // import { FacturaListado } from "./componentes/factura/FacturaListado.js";
 // import { FacturaDetalle } from "./componentes/factura/FacturaDetalle.js";
 
-// import { DProductoForm } from "./componentes/dfactura/DProductosForm.js"
+import { DetalleForm } from "./componentes/dfactura/DetalleForm.js"
 
 export default function App() {
   return (
@@ -50,10 +50,8 @@ export default function App() {
           <Route path="/facturas/nueva" component={FacturaForm}></Route>
           <Route path="/facturas/:id" component={FacturaForm}></Route>
           <Route path="/facturas" component={FacturaListado}></Route>
-
-          
-
-          <Route path="/producto/:id" component={DProductoForm}></Route> */}
+  */}
+          <Route path="/producto/:id" component={DetalleForm}></Route>
 
         </Switch>
       </Router >

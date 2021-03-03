@@ -9,5 +9,4 @@ class Producto(db.Model):
     descripcion = Column(String(120), nullable=False)
     costo = Column(Numeric())
     porcentaje_ganancia = Column(Numeric())
-    porcentaje_venta = Column(Numeric())
     detalle = relationship("Detalle")

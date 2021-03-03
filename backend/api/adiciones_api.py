@@ -7,6 +7,7 @@ repo = AdicionesRepo()
 nsAdicion = Namespace('adiciones', description='Administrador de adiciones')
 modeloAdicionSinN = Model('AdicionSinNumero',{
     'mesa': fields.Integer(),
+    'porcentaje_venta': fields.Float(),
     'fecha': fields.Date(),
     'nro_mozo': fields.Integer()
 })
@@ -26,6 +27,7 @@ nsAdicion.models[modeloBusqueda.name] = modeloBusqueda
 
 nuevaAdicionParser = reqparse.RequestParser(bundle_errors=True)
 nuevaAdicionParser.add_argument('mesa', type=int, required=True)
+nuevaAdicionParser.add_argument('porcentaje_venta', type=float, required=True)
 nuevaAdicionParser.add_argument('fecha', type=str, required=True)
 nuevaAdicionParser.add_argument('nro_mozo', type=int, required=True)
 

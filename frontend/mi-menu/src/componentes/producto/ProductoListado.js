@@ -31,7 +31,7 @@ export function ProductoListado() {
   return (
     <div>
       <h1>Productos</h1>
-      <table className="table">
+      <table className="table text-center">
         <thead>
           <tr>
             <th>Codigo</th>

@@ -28,6 +28,7 @@ class AdicionesRepo():
         if a:
             a.numero = data['numero']
             a.mesa = data['mesa']
+            a.porcentaje_venta = data['porcentaje_venta']
             a.nro_mozo = data['nro_mozo']
             a.fecha = data['fecha']
             a.cerrada = data['cerrada']
