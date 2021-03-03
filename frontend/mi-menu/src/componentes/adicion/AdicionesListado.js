@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
 export function AdicionesListado() {
+  const [ mozo ] = useParams()
   const [lista, setLista] = useState([])
+ 
   useEffect(() => {
     getAdiciones()
   }, [])
@@ -34,6 +36,20 @@ export function AdicionesListado() {
   return (
     <div>
       <h1>Adiciones</h1>
+      <label for="start">Desde:</label>
+
+<input type="date" id="desde" name="trip-start"
+ value={new Date()}
+ min="2018-01-01" max="2023-12-31"></input>
+
+  <label for="start">Hasta:</label>
+
+  <input type="date" id="hasta" name="trip-start"
+ value={new Date()}
+ min="2018-01-01" max="2023-12-31"></input>
+
+
+  {/* <input type="number" name="nroMozo"value={mozo}>Numero Mozo</input> */}
       <table className="table">
         <thead>
           <tr>
