@@ -27,20 +27,19 @@ export function AdicionesListado() {
       .then((response) => setLista(response.data.filter(factura => factura.numero != null)))
       .catch((error) => alert(error))
   }
-  function getAdicion(nro) {
-    axios.get(`http://localhost:5000/adiciones/${nro}`)
-      .then((response) => {
-        alert("Registro borrado correctamente")
-        getAdiciones()
-      })
-      .catch(error => alert(error))
-  }
+  // function getAdicion(nro) {
+  //   axios.get(`http://localhost:5000/adiciones/${nro}`)
+  //     .then((response) => {
+  //       alert("Registro borrado correctamente")
+  //       getAdiciones()
+  //     })
+  //     .catch(error => alert(error))
+  // }
   function getFiltradas() {
-    axios.put(`http://localhost:5000/buscar/${mozo.mozo}`,fechas)
+    axios.post(`http://localhost:5000/buscar/${mozo.mozo}`,fechas)
       .then((response) => 
-        
-        setLista(response.data.filter(factura => factura.numero != null)
-      ))
+        setLista(response.data)
+      )
       .catch(error => alert(error))
   }
   function getPorMozo(nro)
@@ -72,20 +71,21 @@ export function AdicionesListado() {
   return (
     <div>
       <h1>Adiciones</h1>
-      <label for="start">Desde:</label>
+      <div className="row">
+        <label htmlFor="start">Desde:</label>
+        <input type="date" id="desde" name="trip-start"
+          min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'desde')}></input>
 
-  <input type="date" id="desde" name="trip-start"
-        min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'desde')}></input>
-
-        <label for="start">Hasta:</label>
-
-  <input type="date" id="hasta" name="trip-start"
- min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'hasta')}></input>
-    
-
-  <input type="text" className="input" onChange={(event) => handleMozo(event, 'mozo')}></input>
-
-  <button onClick={()=>getFiltradas()} > BUSCAR</button>
+        <label htmlFor="start">Hasta:</label>
+        <input type="date" id="hasta" name="trip-start"
+          min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'hasta')}></input>
+      
+        <input type="text" className="input" onChange={(event) => handleMozo(event, 'mozo')}></input>
+        
+        <button onClick={()=>getFiltradas()}> BUSCAR</button>
+      </div>
+      
+      <Link className="btn btn-success" to="/adiciones/nueva/">Crear</Link>
       <table className="table">
         <thead>
           <tr>
@@ -93,7 +93,6 @@ export function AdicionesListado() {
             <th>Mesa</th>
             <th>Nro Mozo</th>
             <th>Fecha</th>
-            {/* <th>Estado</th> */}
 
             <th>Acciones</th>
           </tr>
@@ -134,7 +133,7 @@ export function AdicionesListado() {
           )}
         </tbody>
       </table>
-      <Link className="btn btn-success" to="/adiciones/nueva/">Crear</Link>
+      
     </div>
   )
 }

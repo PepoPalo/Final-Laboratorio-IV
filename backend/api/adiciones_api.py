@@ -98,7 +98,7 @@ class AdicionesResource(Resource):
     # """
     @nsAdicion.expect(modeloBusqueda)
     @nsAdicion.marshal_list_with(modeloAdicion)
-    def put(self, mozo):
+    def post(self, mozo):
         data = buscarAdicionesParser.parse_args()
         l = repo.buscar_by_mozo(data, mozo)
         if l:
