@@ -53,7 +53,7 @@ export function AdicionesListado() {
                 <td>{item.mesa}</td>
                 <td>{item.nro_mozo}</td>
                 <td>{item.fecha}</td>
-                {/* <td>{item.cerrada}</td> */}
+                <td>{item.cerrada}</td>
                 <td>
                 <Link className="btn btn-primary" to={"/adiciones/" + item.numero}>Ver</Link> &nbsp;
 

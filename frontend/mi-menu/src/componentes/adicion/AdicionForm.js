@@ -5,21 +5,26 @@ import axios from 'axios';
 export function AdicionForm() {
 
     const { numero } = useParams()
-    
-    const history = useHistory()
-
-    const [listac, setListaC] = useState([])
-     const [listap, setListaP] = useState([])
-    const [listadf, setListaDF] = useState([])
-
     const [adicion, setadicion] = useState({
-        numero: '',
+        numero: numero,
         mesa: '',
         nro_mozo: '',
         fecha: '',
         cerrada: '',
         porcentaje_venta:''
     })
+    const [mozo, setMozo] = useState({
+        numero: adicion.nro_mozo,
+        nombre: ''
+    })
+
+    const history = useHistory()
+
+    const [listac, setListaC] = useState([])
+     const [listap, setListaP] = useState([])
+    const [listadf, setListaDF] = useState([])
+
+  
     const [dadicion, setDadicion] = useState({
         id: '',
         adicion_numero: numero,
@@ -29,11 +34,7 @@ export function AdicionForm() {
 
         
     })
-    const [mozo, setMozo] = useState({
-        numero: adicion.nro_mozo,
-        nombre: ''
-    })
-
+   
 
 
     useEffect(() => {
@@ -45,42 +46,45 @@ export function AdicionForm() {
 
         axios.get("http://localhost:5000/mozos/")
             .then((response) => setListaC(response.data.filter(m => m.numero != null)))
+           
             .catch((error) => alert(error))
 
         if (numero) {
             axios.get(`http://localhost:5000/adiciones/${numero}`)
                 .then(response => setadicion(response.data))
+             
+                .catch(error => alert(error))
+
                
-                .catch(error => alert(error))
-
-                axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
-                .then(response => setMozo(response.data))
-                .catch(error => alert(error))
-
-            axios.get("http://localhost:5000/detalle/")
-                .then((response) => setListaDF(response.data.filter(df => df.adicion_numero != null && df.adicion_numero == numero)))
-                .catch((error) => alert(error))
-
-                
-                // axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
-                // .then(response => setMozo(response.data))
-                // .catch(error => alert(error))
+           
+           
                  
         }
+        if(adicion.nro_mozo != ''){
+            alert(adicion.nro_mozo)
+            axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
+            .then(response => setMozo(response.data))
+            .catch(error => alert(error))
+            alert("entró")
+          
+        }
+        
     }, [])
-function traeMozo(){
-    axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
+function traeMozo(number){
+   //number = adicion.nro_mozo
+    axios.get(`http://localhost:5000/mozos/${number}`)
                 .then(response => setMozo(response.data))
                 .catch(error => alert(error))
-    return mozo;
-}
-    function handleOnChangeDF(event, campo) {
-        setDadicion({
-            ...dadicion,
-            [campo]: event.target.value
-        })
-
-    }
+                alert(number)
+    
+} 
+        function handleOnChange(event, campo) {
+    setadicion({
+        ...adicion,
+        [campo]: event.target.value
+    })
+        }
+   
     function handleOnChanges(event, campo) {
         setMozo({
             ...mozo,
@@ -88,12 +92,7 @@ function traeMozo(){
         })
     }
 
-    function handleOnChange(event, campo) {
-        setadicion({
-            ...adicion,
-            [campo]: event.target.value
-        })
-    }
+   
 
     function guardarDadicion(event) {
 
@@ -152,16 +151,21 @@ function traeMozo(){
                     <input type="text" className="form-control" value={mozo.nombre} onChange={(event) => handleOnChange(event, 'mesa')} />
 
                 </div> */}
+               <label>Mozo</label>
+               <div>
+
+               <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => {handleOnChange(event, 'nro_mozo') }}>
+                
+                <option   selected> {mozo.nombre}</option>
+                    {listac.length > 0 && (
+                        listac.map(item => (
+                        <option key={item.numero} value={item.numero}>{item.nombre}</option>
+                        ))
+                    )}
+            </select>
+
+               </div>
                
-                <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => handleOnChanges(event, 'nro_mozo')}>
-                <label>Mozo</label>
-                        <option   value={adicion.nro_mozo}> {mozo.nombre}</option>
-                            {listac.length > 0 && (
-                                listac.map(item => (
-                                <option key={item.numero} value={item.numero}>{item.nombre}</option>
-                                ))
-                            )}
-                    </select>
 
                     <div className="form-group">
                     <label>Porcentaje venta</label>
