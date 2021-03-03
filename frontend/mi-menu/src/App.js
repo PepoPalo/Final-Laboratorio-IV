@@ -48,6 +48,8 @@ export default function App() {
           <Route path="/productos" component={ProductoListado}></Route>
           <Route path="/adiciones/nueva" component={AdicionForm}></Route>
           <Route path="/adiciones/:numero" component={AdicionForm}></Route>
+          <Route path="/adiciones/buscar" component={AdicionesListado}></Route>
+          <Route path="/adiciones/buscar/:mozo" component={AdicionesListado}></Route>
 
            <Route path="/adiciones" component={AdicionesListado}></Route>
 

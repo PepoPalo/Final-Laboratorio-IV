@@ -4,7 +4,18 @@ import axios from 'axios';
 
 
 export function AdicionesListado() {
- // const [ mozo ] = useParams()
+  const [ mozo,setMozo ] = useState(
+{
+  mozo:''
+}
+   
+  )
+ const [fechas,setFechas] =  useState(
+   {
+     desde:'',
+     hasta:''
+   }
+ )
   const [lista, setLista] = useState([])
  
   useEffect(() => {
@@ -24,32 +35,57 @@ export function AdicionesListado() {
       })
       .catch(error => alert(error))
   }
-  function getFiltradas(desde,hasta,nromozo) {
-    axios.put(`http://localhost:5000/buscar`)
-      .then((response) => {
-        alert("Registro borrado correctamente")
-        getAdiciones()
-      })
+  function getFiltradas() {
+    axios.put(`http://localhost:5000/buscar/${mozo.mozo}`,fechas)
+      .then((response) => 
+        
+        setLista(response.data.filter(factura => factura.numero != null)
+      ))
       .catch(error => alert(error))
   }
+  function getPorMozo(nro)
+  {
 
+    axios.put(`http://localhost:5000/buscar/${nro}`)
+      .then((response) => setLista(response.data.filter(factura => factura.numero != null))
+      )
+      .catch(error => alert(error))
+
+  }
+
+  function handleOnChange(event,campo){
+    setFechas({
+      ...fechas,
+      [campo]: event.target.value
+  })
+
+  }
+
+  function handleMozo(event,campo){
+    setMozo({
+      ...mozo,
+      [campo]: event.target.value
+  })
+
+  }
+ 
   return (
     <div>
       <h1>Adiciones</h1>
       <label for="start">Desde:</label>
 
-<input type="date" id="desde" name="trip-start"
- value={Date.now()}
- min="2018-01-01" max="2023-12-31"></input>
+  <input type="date" id="desde" name="trip-start"
+        min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'desde')}></input>
 
-  <label for="start">Hasta:</label>
+        <label for="start">Hasta:</label>
 
   <input type="date" id="hasta" name="trip-start"
- value={new Date().getDate()}
- min="2018-01-01" max="2023-12-31"></input>
-    <button > BUSCAR</button>
+ min="2018-01-01" max="2023-12-31" onChange={(event) => handleOnChange(event, 'hasta')}></input>
+    
 
-  {/* <input type="text" name="nroMozo">Numero Mozo</input> */}
+  <input type="text" className="input" onChange={(event) => handleMozo(event, 'mozo')}></input>
+
+  <button onClick={()=>getFiltradas()} > BUSCAR</button>
       <table className="table">
         <thead>
           <tr>
@@ -57,7 +93,7 @@ export function AdicionesListado() {
             <th>Mesa</th>
             <th>Nro Mozo</th>
             <th>Fecha</th>
-            <th>Estado</th>
+            {/* <th>Estado</th> */}
 
             <th>Acciones</th>
           </tr>
@@ -70,14 +106,23 @@ export function AdicionesListado() {
                 <td>{item.mesa}</td>
                 <td>{item.nro_mozo}</td>
                 <td>{item.fecha}</td>
-                <td>{item.cerrada}</td>
                 <td>
                 <Link className="btn btn-primary" to={"/adiciones/" + item.numero}>Ver</Link> &nbsp;
 
                 </td>
+               {!item.cerrada &&(
                 <td>
                    <Link className="btn btn-warning" to={"/adiciones/" + item.numero}>Editar</Link> &nbsp;
                 </td>
+
+               )}
+                {item.cerrada &&(
+                <td >
+                   <button className="btn btn-warning"   to={"/adiciones/" + item.numero} disabled>Editar</button> &nbsp;
+                </td>
+
+               )}
+                
               </tr>))
           )}
           {lista.length === 0 && (

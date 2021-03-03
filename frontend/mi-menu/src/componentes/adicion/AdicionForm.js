@@ -131,7 +131,7 @@ function traeMozo(number){
 
 
     return (
-        <>
+        <>  
             {numero && <h1>Editando adicion</h1>}
             {!numero && <h1>Nueva adicion</h1>}
             <form onSubmit={(event) => guardar(event)}>
@@ -154,15 +154,8 @@ function traeMozo(number){
                <label>Mozo</label>
                <div>
 
-               <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => {handleOnChange(event, 'nro_mozo') }}>
-                        {/* {listac.length > 0 && (
-                        listac.find(item => (
-                            item.numero == adicion.nro_mozo
-                            
-                            <option selected> {item.nombre}</option>
-                            
-                          )  )
-                    )} */}
+               <select key={0} value={adicion.nro_mozo} className="form-group" aria-label=".form-select-lg example" onChange={(event) => {handleOnChange(event, 'nro_mozo') }}>
+                       
                         
                     {listac.length > 0 && (
                         listac.map(item => (
