@@ -13,7 +13,7 @@ import { MozoForm } from "./componentes/mozo/MozoForm.js";
 // import { FacturaListado } from "./componentes/factura/FacturaListado.js";
 // import { FacturaDetalle } from "./componentes/factura/FacturaDetalle.js";
 
-import { DetalleForm } from "./componentes/dfactura/DetalleForm.js"
+import { DetalleForm } from "./componentes/detalle/DetalleForm.js"
 
 export default function App() {
   return (
