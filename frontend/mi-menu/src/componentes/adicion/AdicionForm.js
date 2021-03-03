@@ -155,8 +155,15 @@ function traeMozo(number){
                <div>
 
                <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => {handleOnChange(event, 'nro_mozo') }}>
-                
-                <option   selected> {mozo.nombre}</option>
+                        {/* {listac.length > 0 && (
+                        listac.find(item => (
+                            item.numero == adicion.nro_mozo
+                            
+                            <option selected> {item.nombre}</option>
+                            
+                          )  )
+                    )} */}
+                        
                     {listac.length > 0 && (
                         listac.map(item => (
                         <option key={item.numero} value={item.numero}>{item.nombre}</option>

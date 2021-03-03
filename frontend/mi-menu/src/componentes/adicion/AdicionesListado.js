@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 export function AdicionesListado() {
-  const [ mozo ] = useParams()
+ // const [ mozo ] = useParams()
   const [lista, setLista] = useState([])
  
   useEffect(() => {
@@ -39,17 +39,17 @@ export function AdicionesListado() {
       <label for="start">Desde:</label>
 
 <input type="date" id="desde" name="trip-start"
- value={new Date()}
+ value={Date.now()}
  min="2018-01-01" max="2023-12-31"></input>
 
   <label for="start">Hasta:</label>
 
   <input type="date" id="hasta" name="trip-start"
- value={new Date()}
+ value={new Date().getDate()}
  min="2018-01-01" max="2023-12-31"></input>
 
 
-  {/* <input type="number" name="nroMozo"value={mozo}>Numero Mozo</input> */}
+  {/* <input type="text" name="nroMozo">Numero Mozo</input> */}
       <table className="table">
         <thead>
           <tr>
