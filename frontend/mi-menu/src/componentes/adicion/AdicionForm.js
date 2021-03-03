@@ -8,8 +8,8 @@ export function AdicionForm() {
     const history = useHistory()
 
     const [listac, setListaC] = useState([])
-    // const [listap, setListaP] = useState([])
-    const [, setListaDF] = useState([])
+     const [listap, setListaP] = useState([])
+    const [listadf, setListaDF] = useState([])
 
     const [adicion, setadicion] = useState({
         numero: '',
@@ -18,15 +18,15 @@ export function AdicionForm() {
         fecha: '',
         cerrada: ''
     })
-    // const [dadicion, setDadicion] = useState({
-    //     id: '',
-    //     adicion_numero: numero,
-    //     producto_codigo: '',
-    //     porcentaje_venta: '',
-    //     cantidad: ''
+    const [dadicion, setDadicion] = useState({
+        id: '',
+        adicion_numero: numero,
+        producto_codigo: '',
+        porcentaje_venta: '',
+        cantidad: ''
 
         
-    // })
+    })
 
 
     useEffect(() => {
@@ -51,13 +51,13 @@ export function AdicionForm() {
         }
     }, [])
 
-    // function handleOnChangeDF(event, campo) {
-    //     setDadicion({
-    //         ...dadicion,
-    //         [campo]: event.target.value
-    //     })
+    function handleOnChangeDF(event, campo) {
+        setDadicion({
+            ...dadicion,
+            [campo]: event.target.value
+        })
 
-    // }
+    }
 
     function handleOnChange(event, campo) {
         setadicion({
@@ -66,17 +66,17 @@ export function AdicionForm() {
         })
     }
 
-    // function guardarDadicion(event) {
+    function guardarDadicion(event) {
 
-    //     event.preventDefault()
-    //     event.stopPropagation()
-    //     axios.post("http://localhost:5000/detalle/", dadicion)
-    //         .then(response => {
-    //             alert("se ha agregado el registro")
-    //             history.push(`/adiciones/${numero}`)
-    //             //history.go(`/adicions/${id}`)
-    //         }).catch(error => alert(error))
-    // }
+        event.preventDefault()
+        event.stopPropagation()
+        axios.post("http://localhost:5000/detalle/", dadicion)
+            .then(response => {
+                alert("se ha agregado el registro")
+                history.push(`/adiciones/${numero}`)
+                //history.go(`/adicions/${id}`)
+            }).catch(error => alert(error))
+    }
 
     function guardar(event) {
         event.preventDefault()
@@ -133,7 +133,7 @@ export function AdicionForm() {
                 </div>
             </form>
 
-            {/* {numero &&<>
+         {numero &&<>
                 <form onSubmit={(event) => guardarDadicion(event)}>
 
                     <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange={(event) => handleOnChangeDF(event, 'producto_codigo')}>
@@ -155,7 +155,7 @@ export function AdicionForm() {
                         <button onClick={() => history.push("/adiciones")} className="btn btn-warning">Finalizar</button>
                     </div>
                 </form>
-{/* 
+ 
                 <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                         <option selected>Ver Carrito</option>
                             {listadf.length > 0 && (
@@ -167,9 +167,9 @@ export function AdicionForm() {
                                     </option>
                                 ))
                             )}
-                    </select> */}
+                    </select> 
 
-                {/* <table className="table">
+               <table className="table">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -199,8 +199,8 @@ export function AdicionForm() {
                             </tr>
                         )}
                     </tbody>
-                </table> */}
-                {/* </>} */} 
+                </table> 
+                 </>}
          </>
     );
 }

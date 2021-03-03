@@ -14,6 +14,8 @@ import { MozoForm } from "./componentes/mozo/MozoForm.js";
 // import { FacturaDetalle } from "./componentes/factura/FacturaDetalle.js";
 
 import { DetalleForm } from "./componentes/detalle/DetalleForm.js"
+import { AdicionForm } from './componentes/adicion/AdicionForm';
+import { AdicionesListado } from './componentes/adicion/AdicionesListado';
 
 export default function App() {
   return (
@@ -28,11 +30,11 @@ export default function App() {
               <Link className="nav-link active" to="/productos">Productos</Link>
 
             </li>
+           
             <li className="nav-item dropdown">
-              <Link className="nav-link active" to="/facturas">Facturas</Link>
+              <Link className="nav-link active" to="/adiciones">Adiciones</Link>
 
             </li>
-
           </ul>
         </div>
         <Switch>
@@ -50,7 +52,11 @@ export default function App() {
           <Route path="/facturas/nueva" component={FacturaForm}></Route>
           <Route path="/facturas/:id" component={FacturaForm}></Route>
           <Route path="/facturas" component={FacturaListado}></Route>
-  */}
+  */} 
+   <Route path="/adiciones/:id" component={AdicionForm}></Route>
+   <Route path="/adiciones/nueva" component={AdicionForm}></Route>
+   <Route path="/adiciones" component={AdicionesListado}></Route>
+
           <Route path="/producto/:id" component={DetalleForm}></Route>
 
         </Switch>
