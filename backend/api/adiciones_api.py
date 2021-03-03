@@ -71,7 +71,7 @@ class AdicionesResource(Resource):
         abort(400)
     
     @nsAdicion.expect(modeloAdicion)
-    def put(self, numero):
+    def post(self, numero):
         data = editarAdicionParser.parse_args()
         if repo.modificar(numero, data):
             return 'Adicion modificada', 200
@@ -84,12 +84,12 @@ class AdicionesResource(Resource):
     # """
     @nsAdicion.expect(modeloBusqueda)
     @nsAdicion.marshal_list_with(modeloAdicion)
-    def put(self):
+    def post(self):
         data = buscarAdicionesParser.parse_args()
         l = repo.buscar(data)
         if l:
             return l, 200
-        abort()
+        abort(404)
 
 @nsAdicion.route('/buscar/<int:mozo>')
 class AdicionesResource(Resource):
@@ -103,4 +103,4 @@ class AdicionesResource(Resource):
         l = repo.buscar_by_mozo(data, mozo)
         if l:
             return l, 200
-        abort()
+        abort(404)

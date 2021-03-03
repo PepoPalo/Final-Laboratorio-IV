@@ -36,16 +36,16 @@ export function AdicionesListado() {
   //     .catch(error => alert(error))
   // }
   function getFiltradas() {
-    axios.post(`http://localhost:5000/buscar/${mozo.mozo}`,fechas)
+    axios.post(`http://localhost:5000/buscar`,fechas)
       .then((response) => 
         setLista(response.data)
       )
       .catch(error => alert(error))
   }
-  function getPorMozo(nro)
+  function getPorMozo()
   {
 
-    axios.put(`http://localhost:5000/buscar/${nro}`)
+    axios.post(`http://localhost:5000/buscar/${mozo.mozo}`,fechas)
       .then((response) => setLista(response.data.filter(factura => factura.numero != null))
       )
       .catch(error => alert(error))
@@ -82,7 +82,14 @@ export function AdicionesListado() {
       
         <input type="text" className="input" onChange={(event) => handleMozo(event, 'mozo')}></input>
         
-        <button onClick={()=>getFiltradas()}> BUSCAR</button>
+        {mozo==''&&(
+          <button onClick={()=>getFiltradas()}> BUSCAR</button>
+        )}
+        {mozo!= ''&&(
+            <button onClick={()=>getPorMozo()}> BUSCAR</button>
+        )
+         
+        }
       </div>
       
       <Link className="btn btn-success" to="/adiciones/nueva/">Crear</Link>
