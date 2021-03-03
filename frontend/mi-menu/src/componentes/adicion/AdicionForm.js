@@ -5,11 +5,7 @@ import axios from 'axios';
 export function AdicionForm() {
 
     const { numero } = useParams()
-    const [mozo, setMozo] = useState({
-        numero: '',
-        nombre: ''
-    })
-
+    
     const history = useHistory()
 
     const [listac, setListaC] = useState([])
@@ -33,6 +29,11 @@ export function AdicionForm() {
 
         
     })
+    const [mozo, setMozo] = useState({
+        numero: adicion.nro_mozo,
+        nombre: ''
+    })
+
 
 
     useEffect(() => {
@@ -49,15 +50,18 @@ export function AdicionForm() {
         if (numero) {
             axios.get(`http://localhost:5000/adiciones/${numero}`)
                 .then(response => setadicion(response.data))
-                .then( traeMozo())
+               
                 .catch(error => alert(error))
-            
+
+                axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
+                .then(response => setMozo(response.data))
+                .catch(error => alert(error))
+
             axios.get("http://localhost:5000/detalle/")
                 .then((response) => setListaDF(response.data.filter(df => df.adicion_numero != null && df.adicion_numero == numero)))
                 .catch((error) => alert(error))
 
-
-
+                
                 // axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
                 // .then(response => setMozo(response.data))
                 // .catch(error => alert(error))
@@ -68,7 +72,7 @@ function traeMozo(){
     axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
                 .then(response => setMozo(response.data))
                 .catch(error => alert(error))
-    return m;
+    return mozo;
 }
     function handleOnChangeDF(event, campo) {
         setDadicion({
@@ -142,9 +146,16 @@ function traeMozo(){
                     <label>Fecha</label>
                     <input type="text" className="form-control" value={adicion.fecha} onChange={(event) => handleOnChange(event, 'fecha')} />
                 </div>
-                <label>Mozo</label>
+               
+                {/* <div className="form-group">
+                    <label>Mozo</label>
+                    <input type="text" className="form-control" value={mozo.nombre} onChange={(event) => handleOnChange(event, 'mesa')} />
+
+                </div> */}
+               
                 <select className="form-group" aria-label=".form-select-lg example" onChange={(event) => handleOnChanges(event, 'nro_mozo')}>
-                        <option selected value={mozo.numero}> {mozo.nombre}</option>
+                <label>Mozo</label>
+                        <option   value={adicion.nro_mozo}> {mozo.nombre}</option>
                             {listac.length > 0 && (
                                 listac.map(item => (
                                 <option key={item.numero} value={item.numero}>{item.nombre}</option>
@@ -154,7 +165,7 @@ function traeMozo(){
 
                     <div className="form-group">
                     <label>Porcentaje venta</label>
-                    <input type="number" className="form-control" value={adicion.porcentaje_venta} onChange={(event) => handleOnChange(event, 'porcentaje_venta')} />
+                    <input type="number"  min="1" max="100" placeholder="1.0" step="0.1" className="form-control" value={adicion.porcentaje_venta} onChange={(event) => handleOnChange(event, 'porcentaje_venta')} />
                 </div>
 
                 <div className="float-right">
