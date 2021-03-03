@@ -48,6 +48,10 @@ export function DetalleListado() {
     return xtotal;
   }
 
+  function precioUnitario(costo, porcentaje_ganancia) {
+    return (costo + (costo*((porcentaje_ganancia + adicion.porcentaje_venta)/100)))
+  }
+
   function borrar(id) {
     axios.delete(`http://localhost:5000/detalle/${id}`)
       .then((response) => {
@@ -79,8 +83,10 @@ export function DetalleListado() {
             listap.map(item => (
               <tr key={item.id}>
                 <td>{item.cantidad}</td>
-                <td>{item.nombre}</td>
-                <td>{productos.find(cod => cod.codigo == item.producto_codigo).precio_unitario}</td> 
+                <td>{productos.find(cod => cod.codigo == item.producto_codigo).descripcion}</td>
+                <td>${precioUnitario( 
+                        productos.find(cod => cod.codigo == item.producto_codigo).costo, 
+                        productos.find(cod => cod.codigo == item.producto_codigo).porcentaje_ganancia)}</td> 
                 <td>
                     ${subTotal(
                         item.cantidad, 
