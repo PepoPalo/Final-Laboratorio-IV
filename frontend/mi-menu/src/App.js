@@ -6,14 +6,14 @@ import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { ProductoListado } from './componentes/producto/ProductoListado.js';
 import { ProductoForm } from "./componentes/producto/ProductoForm.js";
 
-import { ClienteListado } from "./componentes/cliente/ClienteListado.js";
-import { ClienteForm } from "./componentes/cliente/ClienteForm.js";
+// import { ClienteListado } from "./componentes/cliente/ClienteListado.js";
+// import { ClienteForm } from "./componentes/cliente/ClienteForm.js";
 
-import { FacturaForm } from "./componentes/factura/FacturaForm.js";
-import { FacturaListado } from "./componentes/factura/FacturaListado.js";
-import { FacturaDetalle } from "./componentes/factura/FacturaDetalle.js";
+// import { FacturaForm } from "./componentes/factura/FacturaForm.js";
+// import { FacturaListado } from "./componentes/factura/FacturaListado.js";
+// import { FacturaDetalle } from "./componentes/factura/FacturaDetalle.js";
 
-import { DProductoForm } from "./componentes/dfactura/DProductosForm.js"
+// import { DProductoForm } from "./componentes/dfactura/DProductosForm.js"
 
 export default function App() {
   return (
@@ -37,15 +37,15 @@ export default function App() {
         </div>
         <Switch>
                                                               
-          <Route path="/clientes/nuevo" component={ClienteForm}></Route>
+          {/* <Route path="/clientes/nuevo" component={ClienteForm}></Route>
           <Route path="/clientes/:id" component={ClienteForm}></Route>
-          <Route path="/clientes" component={ClienteListado}></Route>
+          <Route path="/clientes" component={ClienteListado}></Route> */}
 
           <Route path="/productos/nuevo" component={ProductoForm}></Route>
           <Route path="/productos/:id" component={ProductoForm} ></Route>
           <Route path="/productos" component={ProductoListado}></Route>
 
-          <Route path="/factura/:id:activador" component={FacturaDetalle}></Route>
+          {/* <Route path="/factura/:id:activador" component={FacturaDetalle}></Route>
 
           <Route path="/facturas/nueva" component={FacturaForm}></Route>
           <Route path="/facturas/:id" component={FacturaForm}></Route>
@@ -53,7 +53,7 @@ export default function App() {
 
           
 
-          <Route path="/producto/:id" component={DProductoForm}></Route>
+          <Route path="/producto/:id" component={DProductoForm}></Route> */}
 
         </Switch>
       </Router >
