@@ -21,6 +21,7 @@ export function DetalleListado() {
 
   useEffect(() => {
     getLista()
+    console.log()
   }, [])
 
   function getLista() {
@@ -28,7 +29,7 @@ export function DetalleListado() {
     .then((response) => {
       setProductos(response.data.filter(producto => producto.codigo != null))
       axios.get("http://localhost:5000/detalle/")
-      .then((response) => setListap(response.data.filter(d => d.adicion_numero != null && d.adicion_numero == id)))
+      .then((response) => setListap(response.data.filter(d => d.adicion_numero != null && d.adicion_numero == response.data[0].adicion_numero)))
       .catch((error) => alert(error))
       })
     .catch((error) => alert(error))
@@ -61,7 +62,6 @@ export function DetalleListado() {
     <>
       <div className="row justify-content-between">
         <h2 className="col-2">Detalle</h2>
-        {!adicion.cerrada && <Link className="btn btn-primary col-1 w-auto pl-5" to={`/producto/${id}`}>+</Link>}
       </div>
 
       <table className="table">
@@ -79,7 +79,7 @@ export function DetalleListado() {
             listap.map(item => (
               <tr key={item.id}>
                 <td>{item.cantidad}</td>
-                <td>{productos.find(cod => cod.codigo == item.producto_codigo).nombre}</td>
+                <td>{item.nombre}</td>
                 <td>{productos.find(cod => cod.codigo == item.producto_codigo).precio_unitario}</td> 
                 <td>
                     ${subTotal(

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {DetalleListado} from '../detalle/DetalleListado'
 
@@ -62,11 +62,9 @@ export function AdicionForm() {
                  
         }
         if(adicion.nro_mozo != ''){
-            alert(adicion.nro_mozo)
             axios.get(`http://localhost:5000/mozos/${adicion.nro_mozo}`)
             .then(response => setMozo(response.data))
             .catch(error => alert(error))
-            alert("entró")
           
         }
         
@@ -102,7 +100,6 @@ function traeMozo(number){
             .then(response => {
                 alert("se ha agregado el registro")
                 history.push(`/adiciones/${numero}`)
-                //history.go(`/adicions/${id}`)
             }).catch(error => alert(error))
     }
 
@@ -138,9 +135,13 @@ function traeMozo(number){
                         <input type="text" className="form-control" placeholder="0" value={adicion.mesa} onChange={(event) => handleOnChange(event, 'mesa')} />
 
                     </div>
-                    <div className="form-group col-3">
+                    {/* <div className="form-group col-3">
                         <label>Fecha</label>
                         <input type="text" className="form-control" placeholder="YYYY-MM-DD" value={adicion.fecha} onChange={(event) => handleOnChange(event, 'fecha')} />
+                    </div> */}
+                    <div className="form-group col-3">
+                        <label>Fecha</label>
+                        <input type="date" min="2018-01-01" max="2023-12-31" className="form-control" placeholder="YYYY-MM-DD" value={adicion.fecha} onChange={(event) => handleOnChange(event, 'fecha')} />
                     </div>
                     <div className="form-group col-2">
                         <label>Porcentaje venta</label>
@@ -163,8 +164,8 @@ function traeMozo(number){
                     <button onClick={() => history.push("/adiciones")} className="btn btn-danger">Cancelar</button>
                 </div>
             </form>
-
-         {numero && <DetalleListado id={numero} />}
-         </>
+        {!adicion.cerrada && <Link className="btn btn-primary col-1 w-auto pl-5" to={`/producto/${numero}`}>+</Link>}
+        {numero && <DetalleListado numero={ numero } />}
+        </>
     );
 }

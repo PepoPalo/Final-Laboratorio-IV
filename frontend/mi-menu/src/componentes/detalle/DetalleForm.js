@@ -33,7 +33,7 @@ export function DetalleForm() {
     }
 
     function guardar(event) {
-
+        console.log(id)
         event.preventDefault()
         event.stopPropagation()
             axios.post("http://localhost:5000/detalle/", producto)

@@ -8,7 +8,6 @@ nsDetalle = Namespace('detalle', description= 'Administrador de detalle')
 modeloDetalleSinNum = Model('DetalleSinNumero',{
     'adicion_numero': fields.Integer(),
     'producto_codigo': fields.Integer(),
-    'porcentaje_venta': fields.Float(),
     'cantidad': fields.Integer()
 })
 
@@ -22,7 +21,6 @@ nsDetalle.models[modeloDetalle.name] = modeloDetalle
 nuevoDetalleParser = reqparse.RequestParser(bundle_errors=True)
 nuevoDetalleParser.add_argument('adicion_numero', type=int, required=True)
 nuevoDetalleParser.add_argument('producto_codigo', type=int, required=True)
-nuevoDetalleParser.add_argument('porcentaje_venta', type=float, required=True)
 nuevoDetalleParser.add_argument('cantidad', type=int, required=True)
 
 editarDetalleParser = nuevoDetalleParser.copy()
