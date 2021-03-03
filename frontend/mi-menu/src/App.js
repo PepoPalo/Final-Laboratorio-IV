@@ -6,8 +6,8 @@ import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { ProductoListado } from './componentes/producto/ProductoListado.js';
 import { ProductoForm } from "./componentes/producto/ProductoForm.js";
 
-// import { ClienteListado } from "./componentes/cliente/ClienteListado.js";
-// import { ClienteForm } from "./componentes/cliente/ClienteForm.js";
+import { MozoListado } from "./componentes/mozo/MozoListado.js";
+import { MozoForm } from "./componentes/mozo/MozoForm.js";
 
 // import { FacturaForm } from "./componentes/factura/FacturaForm.js";
 // import { FacturaListado } from "./componentes/factura/FacturaListado.js";
@@ -22,7 +22,7 @@ export default function App() {
         <div className="App">
           <ul className="nav nav-tabs">
             <li className="nav-item">
-              <Link className="nav-link active" to="/clientes">Clientes</Link>
+              <Link className="nav-link active" to="/mozos">Mozos</Link>
             </li>
             <li className="nav-item dropdown">
               <Link className="nav-link active" to="/productos">Productos</Link>
@@ -37,9 +37,9 @@ export default function App() {
         </div>
         <Switch>
                                                               
-          {/* <Route path="/clientes/nuevo" component={ClienteForm}></Route>
-          <Route path="/clientes/:id" component={ClienteForm}></Route>
-          <Route path="/clientes" component={ClienteListado}></Route> */}
+          <Route path="/mozos/nuevo" component={MozoForm}></Route>
+          <Route path="/mozos/:id" component={MozoForm}></Route>
+          <Route path="/mozos" component={MozoListado}></Route>
 
           <Route path="/productos/nuevo" component={ProductoForm}></Route>
           <Route path="/productos/:id" component={ProductoForm} ></Route>
