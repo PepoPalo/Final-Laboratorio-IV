@@ -9,7 +9,8 @@ modeloAdicionSinN = Model('AdicionSinNumero',{
     'mesa': fields.Integer(),
     'porcentaje_venta': fields.Float(),
     'fecha': fields.Date(),
-    'nro_mozo': fields.Integer()
+    'nro_mozo': fields.Integer(),
+    'cerrada': fields.Boolean()
 })
 
 modeloAdicion = modeloAdicionSinN.clone('Adicion', {
@@ -30,6 +31,7 @@ nuevaAdicionParser.add_argument('mesa', type=int, required=True)
 nuevaAdicionParser.add_argument('porcentaje_venta', type=float, required=True)
 nuevaAdicionParser.add_argument('fecha', type=str, required=True)
 nuevaAdicionParser.add_argument('nro_mozo', type=int, required=True)
+nuevaAdicionParser.add_argument('cerrada', type=bool, required=False)
 
 editarAdicionParser = nuevaAdicionParser.copy()
 editarAdicionParser.add_argument('numero', type=int, required=True)

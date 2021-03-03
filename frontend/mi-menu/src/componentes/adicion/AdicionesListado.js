@@ -24,7 +24,7 @@ export function AdicionesListado() {
       })
       .catch(error => alert(error))
   }
-  function getFiltradas(nro) {
+  function getFiltradas(desde,hasta,nromozo) {
     axios.put(`http://localhost:5000/buscar`)
       .then((response) => {
         alert("Registro borrado correctamente")
@@ -47,7 +47,7 @@ export function AdicionesListado() {
   <input type="date" id="hasta" name="trip-start"
  value={new Date().getDate()}
  min="2018-01-01" max="2023-12-31"></input>
-
+    <button > BUSCAR</button>
 
   {/* <input type="text" name="nroMozo">Numero Mozo</input> */}
       <table className="table">
@@ -58,6 +58,7 @@ export function AdicionesListado() {
             <th>Nro Mozo</th>
             <th>Fecha</th>
             <th>Estado</th>
+
             <th>Acciones</th>
           </tr>
         </thead>
@@ -75,7 +76,7 @@ export function AdicionesListado() {
 
                 </td>
                 <td>
-                  <Link className="btn btn-warning" to={"/adiciones/" + item.numero}>Editar</Link> &nbsp;
+                   <Link className="btn btn-warning" to={"/adiciones/" + item.numero}>Editar</Link> &nbsp;
                 </td>
               </tr>))
           )}

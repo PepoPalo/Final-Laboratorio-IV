@@ -10,7 +10,7 @@ export function AdicionForm() {
         mesa: '',
         nro_mozo: '',
         fecha: '',
-        cerrada: '',
+        cerrada: false,
         porcentaje_venta:''
     })
     const [mozo, setMozo] = useState({
